@@ -32,6 +32,7 @@ public class PureToneActivity extends Activity implements Runnable {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             audio.isPlaying = false;
+            audio.stop();
             this.finish();
         }
         return super.onKeyDown(keyCode, event);
@@ -41,7 +42,6 @@ public class PureToneActivity extends Activity implements Runnable {
     @Override
     public void run() {
         audio.Song();
-        audio.stop();
     }
 
 }
