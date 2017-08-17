@@ -3,10 +3,13 @@ package com.csc.puretone;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
 
 public class PureToneActivity extends Activity implements Runnable {
-    AudioTrackManager audio;
-    Thread thread;
+    private AudioTrackManager audio;
+    private Thread thread;
+    private Button btn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -15,7 +18,13 @@ public class PureToneActivity extends Activity implements Runnable {
         audio = new AudioTrackManager();
         audio.start(400);
         thread = new Thread(this);
-        thread.start();
+        btn = (Button) findViewById(R.id.play);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                thread.start();
+            }
+        });
     }
 
 
