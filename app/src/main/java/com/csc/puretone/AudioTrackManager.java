@@ -71,11 +71,12 @@ public class AudioTrackManager {
         }
     }
 
-    Thread thread;
-    boolean isPlaying;
-    boolean lock = false;
+    private Thread thread;
+    private boolean isPlaying = false;
+    private boolean lock = false;
 
     public void Song() {
+        isPlaying = true;
         int i = 1;
         float FDELTA = tablef[0];//Ct大调基础
         float DELAY = (float) (60000 * 1f / tablep[0]);
@@ -91,7 +92,7 @@ public class AudioTrackManager {
             else {
                 //延时
                 //获取频率数据写出
-                Hz = (int) (gangqing[(int) (tablef[i]+FDELTA)]  );
+                Hz = (int) (gangqing[(int) (tablef[i] + FDELTA)]);
                 waveLen = RATE / Hz;
                 length = waveLen * Hz;
                 lock = true;
@@ -102,7 +103,6 @@ public class AudioTrackManager {
 
                         @Override
                         public void run() {
-                            isPlaying = true;
                             while (isPlaying) {
                                 if (!lock)
                                     audioTrack.write(wave, 0, length);
@@ -124,16 +124,6 @@ public class AudioTrackManager {
         }
     }
 
-
-    /**
-     * 写入数据
-     */
-    public void play() {
-        if (audioTrack != null) {
-            audioTrack.write(wave, 0, length);
-        }
-    }
-
     /**
      * 停止播放
      */
@@ -142,6 +132,7 @@ public class AudioTrackManager {
             audioTrack.stop();
             audioTrack.release();
             audioTrack = null;
+            thread = null;
         }
     }
 
@@ -175,6 +166,10 @@ public class AudioTrackManager {
     public void setChannel(int channel) {
         this.channel = channel;
         setVolume(volume);
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
     }
 }
 

@@ -22,7 +22,7 @@ public class PLsheet {
             100, 5, 6, 8, 9, 6, 5, 3, 10, 8, 9, 10, 8, 0XFF
     };
 
-    public static final float tablep[] = {360,
+    public static final float tablep[] = {60*4,
             3, 1, 4, 1, 1, 1, 1, 4, 2, 2, 2, 2, 8,
             100, 3, 1, 2, 2, 2, 2, 4, 2, 2, 2, 2, 8,
             100, 2, 1, 1, 2, 2, 2, 2, 4, 2, 1, 1, 2, 2, 2, 2, 4,

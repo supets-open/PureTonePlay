@@ -8,7 +8,6 @@ import android.widget.Button;
 
 public class PureToneActivity extends Activity implements Runnable {
     private AudioTrackManager audio;
-    private Thread thread;
     private Button btn;
 
     @Override
@@ -16,13 +15,11 @@ public class PureToneActivity extends Activity implements Runnable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         audio = new AudioTrackManager();
-        audio.start(400);
-        thread = new Thread(this);
         btn = (Button) findViewById(R.id.play);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                thread.start();
+                new Thread(PureToneActivity.this).start();
             }
         });
     }
@@ -31,17 +28,19 @@ public class PureToneActivity extends Activity implements Runnable {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            audio.isPlaying = false;
             audio.stop();
             this.finish();
         }
         return super.onKeyDown(keyCode, event);
     }
 
-
     @Override
     public void run() {
-        audio.Song();
+        if (!audio.isPlaying()){
+            audio.start(400);
+            audio.Song();
+            audio.stop();
+        }
     }
 
 }
